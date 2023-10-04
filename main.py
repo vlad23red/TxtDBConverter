@@ -8,11 +8,11 @@ import pandas as pd
 def parse_format1(content):
     lines = content.split("\n")
     data = []
-    date = None  # добавьте эту строку
+    date = None
 
     for line in lines:
-        if "Date:" in line:  # Проверьте наличие даты в строке
-            date = line.split(":")[1].strip()  # Извлеките дату
+        if "Date:" in line:
+            date = line.split(":")[1].strip()
 
         elif "@" in line:
             parts = line.split(":")
@@ -26,12 +26,12 @@ def parse_format1(content):
                 username, password = parts
                 data.append({"username": username, "password": password})
 
-    return data, date  # Возвращаем данные и дату
+    return data, date
 
 
 def parse_format2(content):
     data = []
-    date = None  # добавьте эту строку
+    date = None
 
     google_block_pattern = r"URL: https://accounts\.google\.com/signin/v2/challenge/pwd(.*?)="
     google_blocks = re.findall(google_block_pattern, content, re.DOTALL)
@@ -54,10 +54,10 @@ def parse_format2(content):
         if username and password:
             data.append({"username": username.group(1), "password": password.group(1)})
 
-    return data, date  # Возвращаем данные и дату
+    return data, date
 
 
-def insert_to_db(data, date=None):  # добавьте аргумент date со значением по умолчанию
+def insert_to_db(data, date=None):
     conn = sqlite3.connect('data.db')
     cursor = conn.cursor()
 
