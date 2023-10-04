@@ -3,6 +3,7 @@ from tkinter import filedialog, messagebox
 import sqlite3
 import re
 import pandas as pd
+import openpyxl
 
 
 def parse_format1(content):
